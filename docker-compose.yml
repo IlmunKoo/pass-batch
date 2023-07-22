@@ -1,0 +1,23 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mysql: # 서비스 이름
+    container_name: mysql_local
+    image: mysql:8.0.31 # 원리 30
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    # command: --default-authentication-plugin=mysql_native_password #인증 플러그인 암호화 방식 변경
+    volumes: # 도커 컨테이너 삭제시 데이터 삭제, 이와 상관없이 데이터 유지하도록 하는 것이 볼륨
+      - ./db.conf.d:/etc/mysql.conf.d # 호스트 실제 경로 연결
+      - ./db.initdb.d:/docker-entrypoint-initdb.d # 컨테이너 시작시 폴더 내 .sh 파일 실행, 파일명 따라 알파벳순으로 실행
+    ports:
+      - "3306:3306"
+#    restart: always # 멈추면 직접 확인, 로컬에서 돌아가므로
+    environment: # 환경변수 설치
+      - MYSQL_DATABASE=pass_local
+      - MYSQL_USER=pass_local_user
+      - MYSQL_PASSWORD=passlocal123
+      - MYSQL_ROOT_PASSWORD=passlocal123
+      - TZ=Asia/Seoul
+

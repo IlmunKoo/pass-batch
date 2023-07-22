@@ -1,0 +1,15 @@
+package com.fastcampus.pass.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+
+@EnableJpaAuditing
+@Configuration
+public class JpaConfig {
+}
+
+
+// JPA Auditing: 시간 데이터 자동으로 시간 맵핑해서 DB 테이블에 넣어 준다
+// 모든 테이블에서 created at과 modified at을 넣는다
+
